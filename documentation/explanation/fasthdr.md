@@ -56,15 +56,15 @@ Perfect for:
 ## Quick Start
 
 :::tip Works with Unity and Blender
-FastHDR is available in both Unity and Blender integrations starting with Needle Engine 5.0.0.
+FastHDR is available in both Unity and Blender integrations starting with Needle Engine 5.0.0. Since **Needle Engine 5.1**, both `.exr` **and** `.hdr` (HDRi) source files are supported — earlier versions only handled `.exr`.
 :::
 
 ### In Unity or Blender
 
-Use **any** `.exr` file — Needle Engine handles the rest:
+Use **any** `.exr` or `.hdr` file — Needle Engine handles the rest:
 
 1. Open your Needle Engine project
-2. Set your scene's **Environment Lighting** to any `.exr` HDRI
+2. Set your scene's **Environment Lighting** to any `.exr` or `.hdr` HDRI
 3. When you build for production, Needle Engine's optimization pipeline automatically converts it to FastHDR
 4. That's it! Your deployed scene loads with ultra-fast, high-quality lighting
 
@@ -88,9 +88,26 @@ You can also use built-in presets without any URL:
 <needle-engine environment-image="studio" background-image="studio"></needle-engine>
 ```
 
+Want to use **your own** HDRi or EXR instead of the library? Upload it to [Needle Cloud](https://cloud.needle.tools), which compresses it to a hosted FastHDR (KTX2) texture, then point the `environment-image` / `background-image` attributes at the resulting URL. See [Bring Your Own HDRi / EXR](#bring-your-own-hdri-exr) below.
+
 ## Free HDR Library
 
 Browse **27+ free FastHDR environments** at [cloud.needle.tools/hdris](https://cloud.needle.tools/hdris) — indoor studios, outdoor landscapes, cityscapes, and more. All ready to use, all in FastHDR format.
+
+## Bring Your Own HDRi / EXR
+
+To turn your own HDRi or EXR file (`.hdr` / `.exr`) into FastHDR, you have two paths — pick whichever fits your workflow:
+
+- **As part of the Needle Engine workflow in Unity or Blender.** Assign your HDRi/EXR as the scene's environment lighting and the production build automatically converts it to FastHDR. This is the default path when you author your scene in an editor — see [Quick Start](#quick-start) above.
+- **By uploading directly to [Needle Cloud](https://cloud.needle.tools).** Drop your HDRi/EXR onto Needle Cloud and it's compressed to a hosted FastHDR (KTX2) texture. This is ideal for code-only or three.js projects, or any standalone HDRI you want to host and reuse. Point the `environment-image` / `background-image` attributes at the resulting URL:
+
+```html
+<needle-engine
+  environment-image="https://cloud.needle.tools/-/assets/.../file"
+  background-image="https://cloud.needle.tools/-/assets/.../file"
+>
+</needle-engine>
+```
 
 ## How It Works
 

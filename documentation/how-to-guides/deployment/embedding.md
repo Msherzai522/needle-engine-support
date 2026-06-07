@@ -6,6 +6,10 @@ title: Embedding Needle Engine
 
 **Add interactive 3D to any website.** Needle Engine can be integrated into existing websites, embedded in CMSs like WordPress, or deployed as standalone web apps. This guide covers all the ways to get your 3D content live.
 
+:::tip Building a web project from scratch?
+This page is about getting an existing or deployed scene **onto a website** (iframe, `needle-app`, CMS platforms). If you're **building a web project** with Needle — frameworks, bundlers, the `<needle-engine>` web component — start with [Web Integration &amp; Frameworks](/docs/how-to-guides/web-integration/).
+:::
+
 ## Quick Test: 2-Minute Integration
 
 Want to see how Needle Engine looks on your website? Add these two lines anywhere on your page:
@@ -153,7 +157,24 @@ The `allow` attribute depends on your app's features:
 [See full list of iframe permissions →](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Permissions-Policy#directives)
 :::
 
-### 5. Direct Integration (Advanced)
+### 5. `<needle-app>` (Same-Document Embed)
+
+**Best for:** Existing websites (Webflow, custom HTML) where the scene should be *part of the page* — clickable HTML driving the scene, or scroll-driven 3D.
+
+Every production build emits a `needle-app.js` loader alongside your `dist/`. Add two lines to run the scene **inline in the page** (not inside an iframe), so page scripts can talk to it directly:
+
+```html
+<script type="module" src="https://your-host.com/needle-app.js"></script>
+<needle-app src="https://your-host.com/assets/MyScene.glb"></needle-app>
+```
+
+Because the scene shares the page's document, your buttons can call into it directly (no `postMessage`), and components like [`ScrollFollow`](/docs/how-to-guides/components/scroll-follow) follow the page's own scroll.
+
+:::tip Use an absolute `src` across domains
+When embedding on a different domain, point `src` at the full URL of your main `.glb` (e.g. `https://…needle.run/assets/MyScene.glb`) — a relative path would resolve against the host page. Files must be served with cross-origin (CORS) headers; [Needle Cloud](/docs/cloud/) (`*.needle.run`) does this automatically. See the [Webflow guide](../integrations/webflow) for a full walkthrough. Requires Needle Engine 5.1+.
+:::
+
+### 6. Direct Integration (Advanced)
 
 **Best for:** Existing websites, custom layouts, advanced control
 
@@ -183,7 +204,7 @@ Embed a Needle Engine project directly into an existing webpage's HTML.
 
 ---
 
-### 6. CDN for Core Components Only
+### 7. CDN for Core Components Only
 
 **Best for:** Projects without custom scripts, quick prototypes, simple scenes
 
@@ -204,7 +225,7 @@ Use Needle Engine directly from a CDN without uploading any JavaScript bundles.
    - Contains `.glb` files and other assets (audio, video, skybox, etc.)
 3. Update the `src` attribute to point to your uploaded `.glb` file
 
-### 7. Needle Cloud iframe
+### 8. Needle Cloud iframe
 
 **Best for:** Projects hosted on Needle Cloud, quick sharing, portfolios
 
@@ -310,11 +331,9 @@ Embed Needle Engine in WordPress posts, pages, and custom themes.
 Shopify integration guide coming soon. In the meantime, use the [iframe method](#4-iframe-embedding) for quick integration.
 :::
 
-### <logo-header logo="/imgs/webflow-logo.webp" alt="Webflow">Webflow</logo-header>
+### <logo-header logo="/imgs/webflow-logo.webp" alt="Webflow"><a href="../integrations/webflow">Webflow</a></logo-header>
 
-:::warning Under Construction
-Webflow integration guide coming soon. In the meantime, use the [iframe method](#4-iframe-embedding) for quick integration.
-:::
+Embed Needle Engine in Webflow pages — as an iframe, or inline with `<needle-app>` for direct interaction and scrollytelling.
 
 ## Next Steps
 
